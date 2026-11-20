@@ -1,12 +1,14 @@
-import { Node } from "./node";
+import { Node } from "./node.js";
 
 class Tree {
-    constructor(root) {
-        this.root = root;
-    }
+  // constructor
+  constructor(arr) {
+    this.arr = arr;
+    this.root = (0 + [arr.length - 1]) / 2;
+  }
+}
 
-    // method
-    buildTree(array){
-        
-    }
-};
+const data = new Node([5, 4, 10, 22, 1, 7, 3, 4, 1]);
+const bst = new Tree(data);
+
+console.log(bst.root);
