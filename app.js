@@ -1,12 +1,8 @@
-import { Node } from "./node";
+import { Node } from "./node.js";
+import { Tree } from "./tree.js";
 
-class Tree {
-    constructor(root) {
-        this.root = root;
-    }
+ function buildTree(arr) {
+    return arr.sort((a, b) => a - b);
+ }
 
-    // method
-    buildTree(array){
-        
-    }
-};
+ console.log(buildTree([5, 2, 3, 5, 1, 7, 9]));
