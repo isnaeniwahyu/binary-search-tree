@@ -4,17 +4,20 @@ class Tree {
         this.root = [];        
     }
     
-    // build a tree
-    buildTree(array) {
-        let sortedArray = array.sort((a, b) => a - b);
+    sorted(array) {
+        return array.sort((a, b) => a - b);
+    }
+
+    removeDuplicate(array){
+        let sortedArr = this.sorted(array);
         let removeDuplicate = [];
-        for (let i = 0; i < sortedArray.length; i++) {
-            if (sortedArray[i] !== sortedArray[i + 1]){
-                removeDuplicate.push(sortedArray[i]);
+        for (let i = 0; i < sortedArr.length; i++) {
+            if (sortedArr[i] !== sortedArr[i+1]){
+                removeDuplicate.push(sortedArr[i]);
             }
         }
-        return this.root = removeDuplicate;
-    }
+        return removeDuplicate;
+    }    
 }
 
 export {Tree};
