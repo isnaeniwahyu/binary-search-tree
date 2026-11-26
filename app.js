@@ -41,7 +41,8 @@ class Tree {
       return this.root;
     }
 
-    // helper function
+    // helper function    
+    // includes method
     includes(value) {
       // looping through array and checks the value
       // base case 
@@ -61,12 +62,34 @@ class Tree {
       }
       // if none match
       return false;
+    }  
+
+    // insert
+    insert(value) {
+      let newRoot = this.root;
+
+      while(newRoot) {
+        // return if it's same
+        if (newRoot.data === null) {
+          newRoot.data = new Node(value);
+        };
+
+        if(newRoot.data > value) {
+          newRoot = newRoot.left;
+        } else {
+          newRoot = newRoot.right;
+        }
+        return;
+      }
     }
 }
 
-const tree = new Tree();
-tree.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+const bst = new Tree();
 
-// prettyPrint(bst);
-prettyPrint(tree.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]));
-console.log(tree.includes(7));
+// build
+bst.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+bst.insert(2);
+
+// logs
+prettyPrint(bst.root);
+console.log(bst.includes(2));
