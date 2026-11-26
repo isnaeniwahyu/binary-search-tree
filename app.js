@@ -1,32 +1,72 @@
 import { prettyPrint } from "./prettyPrint.js";
 
 class Node {
-  constructor(data = []) {
+  constructor(data) {
     this.data = data;
     this.left = null;
     this.right = null;
   }
 }
 
-class Tree {    
+class Tree {  
     // constructor
     constructor() {
         this.root = null;
     }
+
+    sortedArray(arr) {      
+      let newArr = [...new Set(arr)].sort((a,b) => a - b);
+      return newArr;      
+    }
     
-    // method build tree
-    buildTree(arr, start = arr[0], end = arr.length - 1) {
-        // edge cases
-        if (start > end) return null;
+    // method build tree recursively
+    buidTreeRecursive(arr, start = 0, end = arr.length - 1) {         
+      // base case
+      if (start > end) return null;
 
-        let mid = Math.floor(start + (end - start) / 2);
-        this.root = new Node(arr[mid]);
+      let mid = Math.floor((start + end) / 2);
+      let root = new Node(arr[mid]);
 
-        this.root.left = this.buildTree(arr, start, mid - 1);
-        this.root.right = this.buildTree(arr, mid + 1, end);
+      root.left = this.buidTreeRecursive(arr, start, mid - 1);
+      root.right = this.buidTreeRecursive(arr, mid + 1, end);
 
-        return this.root;   
+      return root;
+    }
+    
+    // return the recursive bst
+    buildTree(arr){
+      let newArr = this.sortedArray(arr);
+      this.root = this.buidTreeRecursive(newArr, 0, newArr.length -1);
+
+      return this.root;
+    }
+
+    // helper function
+    includes(value) {
+      // looping through array and checks the value
+      // base case 
+      let node = this.root
+      if (node === null) return false;
+      
+      while(node) {
+        // base case
+        if(node.data === value) return true;
+        
+        // check if value bigger than the current node
+        if(node.data > value) {
+          node = node.left;
+        } else {
+          node = node.right;
+        }
+      }
+      // if none match
+      return false;
     }
 }
 
-// arr example [1,1,2,3,4,5], [2,1,3,4,1,5]
+const tree = new Tree();
+tree.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+
+// prettyPrint(bst);
+prettyPrint(tree.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]));
+console.log(tree.includes(7));
