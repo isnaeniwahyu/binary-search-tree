@@ -66,6 +66,7 @@ class Tree {
 
     // inserting a new val
     insert(val) {
+      console.log(`Inserting a new value..${val}`);
       let currentRoot = this.root;
 
       // if it's empty bst
@@ -93,6 +94,44 @@ class Tree {
             }           
         }
       } 
+    }  
+
+    // return minimum value of left subtree
+    min(root) {      
+      // guard
+      if(!root) return null;
+      // base case 1: if no left subtree
+      if(!root.left) {
+        return root.data;
+      } else {
+        // case 2 : if there's a left subtree
+        return this.min(root.left);
+      }     
+    }
+
+    // return maximum value of right subtree
+    max(root) {
+      // guard
+      if(!root) return null;
+      // base case 1: if there's no right subtree
+      if(!root.right) {
+        return root.data;
+      } else {
+        return this.max(root.right);
+      }
+    }
+
+    // delete node recursion
+    deleteNode(root, val) {
+      
+    }
+
+    // delete item
+    deleteItem(val) {    
+      // logs 
+      console.log(`Removing a value of ${val}...`);      
+      // recursion or retrieve from other method
+      this.root = this.deleteNode(this.root, val);
     }
 }
 
@@ -100,12 +139,13 @@ const bst = new Tree();
 
 // build
 bst.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-// prettyPrint(bst.root);
-bst.insert(2);
 bst.insert(2);
 bst.insert(11);
+prettyPrint(bst.root);
+bst.deleteItem(3);
+bst.deleteItem(4);
 
 // logs
 prettyPrint(bst.root);
-console.log(bst.includes(2));
-console.log(bst.includes(1));
+console.log(bst.min(bst.root))
+console.log(bst.max(bst.root))
