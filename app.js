@@ -8,7 +8,7 @@ class Node {
   }
 }
 
-class Tree {  
+export default class Tree {  
     // constructor
     constructor() {
         this.root = null;
@@ -123,7 +123,33 @@ class Tree {
 
     // delete node recursion
     deleteNode(root, val) {
+      // empty case
+      if (!root) return null;
       
+      if(val > root.data) {
+        root.right = this.deleteNode(root.right, val);
+      } else if (val < root.data) {
+        root.left = this.deleteNode(root.left, val);
+      } else {
+        // case if same root.data and val
+        // case 1: if only no child 
+        if(!root.left && !root.right) {
+          return null;
+        }
+
+        // case 2: if only 1 child
+        if(!root.left) {
+          return root.right;
+        } else if (!root.right) {
+          return root.left;
+        }
+        
+
+        // case 3: if got both child
+        root.data =  this.min(root.right);
+        root.right = this.deleteNode(root.right, root.data);
+      }
+      return root;
     }
 
     // delete item
@@ -134,18 +160,3 @@ class Tree {
       this.root = this.deleteNode(this.root, val);
     }
 }
-
-const bst = new Tree();
-
-// build
-bst.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-bst.insert(2);
-bst.insert(11);
-prettyPrint(bst.root);
-bst.deleteItem(3);
-bst.deleteItem(4);
-
-// logs
-prettyPrint(bst.root);
-console.log(bst.min(bst.root))
-console.log(bst.max(bst.root))
