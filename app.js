@@ -20,15 +20,15 @@ class Tree {
     }
     
     // method build tree recursively
-    buidTreeRecursive(arr, start = 0, end = arr.length - 1) {         
+    buildTreeRecursive(arr, start = 0, end = arr.length - 1) {         
       // base case
       if (start > end) return null;
 
       let mid = Math.floor((start + end) / 2);
       let root = new Node(arr[mid]);
 
-      root.left = this.buidTreeRecursive(arr, start, mid - 1);
-      root.right = this.buidTreeRecursive(arr, mid + 1, end);
+      root.left = this.buildTreeRecursive(arr, start, mid - 1);
+      root.right = this.buildTreeRecursive(arr, mid + 1, end);
 
       return root;
     }
@@ -36,7 +36,7 @@ class Tree {
     // return the recursive bst
     buildTree(arr){
       let newArr = this.sortedArray(arr);
-      this.root = this.buidTreeRecursive(newArr, 0, newArr.length -1);
+      this.root = this.buildTreeRecursive(newArr, 0, newArr.length -1);
 
       return this.root;
     }
@@ -64,23 +64,35 @@ class Tree {
       return false;
     }  
 
-    // insert
-    insert(value) {
-      let newRoot = this.root;
+    // inserting a new val
+    insert(val) {
+      let currentRoot = this.root;
 
-      while(newRoot) {
-        // return if it's same
-        if (newRoot.data === null) {
-          newRoot.data = new Node(value);
-        };
-
-        if(newRoot.data > value) {
-          newRoot = newRoot.left;
-        } else {
-          newRoot = newRoot.right;
-        }
-        return;
+      // if it's empty bst
+      if(!currentRoot) {
+        return this.root = new Node(val);        
       }
+
+      // looping through bst
+      while (true) {
+        // base case if it same value
+        if (currentRoot.data === val) return;
+
+        // check left & right
+        if (currentRoot.data > val) {
+          if (currentRoot.left) {
+           currentRoot = currentRoot.left;
+          } else {
+            return currentRoot.left = new Node (val);
+          }
+        } else if (currentRoot.data < val) {
+            if (currentRoot.right) {
+              currentRoot = currentRoot.right;
+            } else {
+              return currentRoot.right = new Node (val);
+            }           
+        }
+      } 
     }
 }
 
@@ -88,8 +100,12 @@ const bst = new Tree();
 
 // build
 bst.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+// prettyPrint(bst.root);
 bst.insert(2);
+bst.insert(2);
+bst.insert(11);
 
 // logs
 prettyPrint(bst.root);
 console.log(bst.includes(2));
+console.log(bst.includes(1));
